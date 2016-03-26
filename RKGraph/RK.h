@@ -8,10 +8,10 @@ enum TokenType;
 struct Token;
 
 //Use this when you need to calculate repeatedly
-double RK(Token postfix[], int numTokens, double x0, double y0, double h);
+double RKFirstOrder(Token postfix[], int numTokens, double x0, double y0, double h);
 
 //Slightly slower, same accuracy/precision
-double RK(char infix[], double x0, double y0, double h);
+double RKFirstOrder(char infix[], double x0, double y0, double h);
 
 //Returns the number of Tokens in postfix
 int ConvertToPostfix(char *infix, Token *postfix);
@@ -236,7 +236,7 @@ double EvaluatePostfixExpression(Token *postfix, int n, double x, double y)
 	return stack[top];
 }
 
-double RK(Token postfix[], int numTokens, double x0, double y0, double h)
+double RKFirstOrder(Token postfix[], int numTokens, double x0, double y0, double h)
 {
 	double k1 = h * EvaluatePostfixExpression(postfix, numTokens, x0, y0);
 	double k2 = h * EvaluatePostfixExpression(postfix, numTokens, x0 + h / 2, y0 + k1 / 2);
@@ -248,11 +248,11 @@ double RK(Token postfix[], int numTokens, double x0, double y0, double h)
 	return result;
 }
 
-double RK(char infix[], double x0, double y0, double h)
+double RKFirstOrder(char infix[], double x0, double y0, double h)
 {
 	Token postfix[1000];
 	int n = ConvertToPostfix(infix, postfix);
 
-	return RK(postfix, n, x0, y0, h);
+	return RKFirstOrder(postfix, n, x0, y0, h);
 }
 

@@ -482,7 +482,7 @@ namespace LayoutTut {
 
 		for (int i = 0; i < numh; i++)
 		{
-			double result = RK(postfix, n, x0, y0, h);
+			double result = RKFirstOrder(postfix, n, x0, y0, h);
 			x0 = x0 + h;
 			y0 = result;
 			series1->Points->AddXY(x0, y0);
