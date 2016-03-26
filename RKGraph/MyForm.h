@@ -480,6 +480,8 @@ namespace LayoutTut {
 		series1 = chart1->Series->FindByName(L"Series1");
 		series1->Points->Clear();
 
+		series1->Points->AddXY(x0, y0);
+
 		for (int i = 0; i < numh; i++)
 		{
 			double result = RKFirstOrder(postfix, n, x0, y0, h);
