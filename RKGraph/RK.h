@@ -155,9 +155,19 @@ int ConvertToPostfix(char *infix, Token *postfix)
 			}
 			else if (ch == 'y' || ch == 'Y')
 			{
-				postfix[k].token = 'Y';
-				postfix[k].type = TokenType::Y;
-				k++;
+				if (infix[i] == 39 || infix[i] == 96)
+				{
+					i++;
+					postfix[k].token = 'Z';
+					postfix[k].type = TokenType::Z;
+					k++;
+				}
+				else
+				{
+					postfix[k].token = 'Y';
+					postfix[k].type = TokenType::Y;
+					k++;
+				}
 			}
 			else if (ch == 'z' || ch == 'Z')
 			{
@@ -267,7 +277,7 @@ double RKFirstOrder(char infix[], double x0, double y0, double h)
 	return RKFirstOrder(postfix, n, x0, y0, h);
 }
 
-void RKSecondOrder(Token dydx[], Token dzdx[],int numDydx, int numDzdx, double x0, double y0, double z0, double h, double* yRes, double* zRes)
+void RKSimultaneousFirstOrder(Token dydx[], Token dzdx[],int numDydx, int numDzdx, double x0, double y0, double z0, double h, double* yRes, double* zRes)
 {
 	double k1 = h * EvaluatePostfixExpression(dydx,numDydx, x0, y0, z0);
 	double l1 = h * EvaluatePostfixExpression(dzdx, numDzdx, x0, y0, z0);
@@ -285,12 +295,23 @@ void RKSecondOrder(Token dydx[], Token dzdx[],int numDydx, int numDzdx, double x
 	*zRes = z0 + (1 / 6.0) * (l1 + 2 * l2 + 2 * l3 + l4);
 }
 
-void RKSecondOrder(char dydx[], char dzdx[], double x0, double y0, double z0, double h, double* yRes, double* zRes)
+void RKSimultaneousFirstOrder(char dydx[], char dzdx[], double x0, double y0, double z0, double h, double* yRes, double* zRes)
 {
 	Token dydxP[1000], dzdxP[1000];
 	int numDydx = ConvertToPostfix(dydx, dydxP);
 	int numDzdx = ConvertToPostfix(dzdx, dzdxP);
 
-	RKSecondOrder(dydxP, dzdxP, numDydx, numDzdx, x0, y0, z0, h, yRes, zRes);
+	RKSimultaneousFirstOrder(dydxP, dzdxP, numDydx, numDzdx, x0, y0, z0, h, yRes, zRes);
+}
+
+void RKSecondOrder(char infix[], double x0, double y0, double y1_0, double h, double* yRes, double* y1Res)
+{
+	Token dydx[1], dzdx[1000];
+	dydx[0].type = TokenType::Z;
+	dydx[0].token = 'Z';
+
+	int numDzdx = ConvertToPostfix(infix, dzdx);
+
+	RKSimultaneousFirstOrder(dydx, dzdx, 1, numDzdx, x0, y0, y1_0, h, yRes, y1Res);
 }
 
