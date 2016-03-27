@@ -91,9 +91,8 @@ namespace LayoutTut {
 		{
 			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			System::Windows::Forms::DataVisualization::Charting::Legend^  legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
-			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-
 			System::Windows::Forms::DataVisualization::Charting::Legend^  legend2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->tableLayoutPanel5 = (gcnew System::Windows::Forms::TableLayoutPanel());
@@ -388,25 +387,28 @@ namespace LayoutTut {
 			chartArea1->Name = L"ChartArea1";
 			this->chart1->ChartAreas->Add(chartArea1);
 			this->chart1->Dock = System::Windows::Forms::DockStyle::Fill;
-			legend1->Enabled = false;
+			legend1->DockedToChartArea = L"ChartArea1";
+			legend1->ItemColumnSeparator = System::Windows::Forms::DataVisualization::Charting::LegendSeparatorStyle::Line;
 			legend1->Name = L"Legend1";
+			legend2->DockedToChartArea = L"ChartArea1";
+			legend2->Name = L"Legend2";
 			this->chart1->Legends->Add(legend1);
+			this->chart1->Legends->Add(legend2);
 			this->chart1->Location = System::Drawing::Point(3, 3);
 			this->chart1->Name = L"chart1";
+			this->chart1->RightToLeft = System::Windows::Forms::RightToLeft::No;
 			series1->ChartArea = L"ChartArea1";
 			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
 			series1->Legend = L"Legend1";
-			series1->Name = L"Series1";
+			series1->Name = L"y";
 			series1->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
 			series1->YValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
-
 			series2->ChartArea = L"ChartArea1";
 			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
 			series2->Legend = L"Legend2";
-			series2->Name = L"Series2";
+			series2->Name = L"y\'";
 			series2->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
 			series2->YValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
-
 			this->chart1->Series->Add(series1);
 			this->chart1->Series->Add(series2);
 			this->chart1->Size = System::Drawing::Size(617, 400);
@@ -518,11 +520,11 @@ namespace LayoutTut {
 		char* infix = StringToCharArray(this->expression->Text);
 
 		System::Windows::Forms::DataVisualization::Charting::Series^  series1;
-		series1 = chart1->Series->FindByName(L"Series1");
+		series1 = chart1->Series->FindByName(L"y");
 		series1->Points->Clear();
 
 		System::Windows::Forms::DataVisualization::Charting::Series^  series2;
-		series2 = chart1->Series->FindByName(L"Series2");
+		series2 = chart1->Series->FindByName(L"y'");
 		series2->Points->Clear();
 
 		Token dydx[1], dzdx[1000];
@@ -542,7 +544,7 @@ namespace LayoutTut {
 			series1->Points->AddXY(x0, y0);
 			series2->Points->AddXY(x0, y1_0);
 		}
-
+		
 	}
 	};
 }
