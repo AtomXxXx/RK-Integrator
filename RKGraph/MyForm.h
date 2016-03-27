@@ -61,6 +61,8 @@ namespace LayoutTut {
 
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Button^  Calculate;
+	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::Label^  label6;
 
 
 	protected:
@@ -90,6 +92,9 @@ namespace LayoutTut {
 			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			System::Windows::Forms::DataVisualization::Charting::Legend^  legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
 			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+
+			System::Windows::Forms::DataVisualization::Charting::Legend^  legend2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->tableLayoutPanel5 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->h = (gcnew System::Windows::Forms::TextBox());
@@ -98,6 +103,8 @@ namespace LayoutTut {
 			this->expression = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->tableLayoutPanel4 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->y0 = (gcnew System::Windows::Forms::TextBox());
@@ -212,20 +219,26 @@ namespace LayoutTut {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(86, 29);
 			this->label1->TabIndex = 0;
-			this->label1->Text = L"Expression";
+			this->label1->Text = L"y\'\' = ";
 			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			// 
 			// tableLayoutPanel4
 			// 
-			this->tableLayoutPanel4->ColumnCount = 4;
+			this->tableLayoutPanel4->ColumnCount = 6;
 			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				20)));
+				16.66667F)));
 			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				30)));
+				16.66667F)));
 			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				20)));
+				16.66667F)));
 			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				30)));
+				16.66667F)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				16.66667F)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				16.66667F)));
+			this->tableLayoutPanel4->Controls->Add(this->textBox1, 5, 0);
+			this->tableLayoutPanel4->Controls->Add(this->label6, 4, 0);
 			this->tableLayoutPanel4->Controls->Add(this->label3, 2, 0);
 			this->tableLayoutPanel4->Controls->Add(this->label2, 0, 0);
 			this->tableLayoutPanel4->Controls->Add(this->y0, 3, 0);
@@ -238,15 +251,36 @@ namespace LayoutTut {
 			this->tableLayoutPanel4->Size = System::Drawing::Size(377, 29);
 			this->tableLayoutPanel4->TabIndex = 1;
 			// 
+			// textBox1
+			// 
+			this->textBox1->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->textBox1->Location = System::Drawing::Point(313, 3);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(61, 20);
+			this->textBox1->TabIndex = 7;
+			// 
+			// label6
+			// 
+			this->label6->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(251, 0);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(56, 29);
+			this->label6->TabIndex = 6;
+			this->label6->Text = L"y\' 0";
+			this->label6->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			// 
 			// label3
 			// 
 			this->label3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(191, 0);
+			this->label3->Location = System::Drawing::Point(127, 0);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(69, 29);
+			this->label3->Size = System::Drawing::Size(56, 29);
 			this->label3->TabIndex = 5;
 			this->label3->Text = L"y0";
 			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -259,7 +293,7 @@ namespace LayoutTut {
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(3, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(69, 29);
+			this->label2->Size = System::Drawing::Size(56, 29);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"x0";
 			this->label2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -267,17 +301,17 @@ namespace LayoutTut {
 			// y0
 			// 
 			this->y0->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->y0->Location = System::Drawing::Point(266, 3);
+			this->y0->Location = System::Drawing::Point(189, 3);
 			this->y0->Name = L"y0";
-			this->y0->Size = System::Drawing::Size(108, 20);
+			this->y0->Size = System::Drawing::Size(56, 20);
 			this->y0->TabIndex = 3;
 			// 
 			// x0
 			// 
 			this->x0->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->x0->Location = System::Drawing::Point(78, 3);
+			this->x0->Location = System::Drawing::Point(65, 3);
 			this->x0->Name = L"x0";
-			this->x0->Size = System::Drawing::Size(107, 20);
+			this->x0->Size = System::Drawing::Size(56, 20);
 			this->x0->TabIndex = 2;
 			// 
 			// tableLayoutPanel6
@@ -365,7 +399,16 @@ namespace LayoutTut {
 			series1->Name = L"Series1";
 			series1->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
 			series1->YValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
+
+			series2->ChartArea = L"ChartArea1";
+			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series2->Legend = L"Legend2";
+			series2->Name = L"Series2";
+			series2->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
+			series2->YValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
+
 			this->chart1->Series->Add(series1);
+			this->chart1->Series->Add(series2);
 			this->chart1->Size = System::Drawing::Size(617, 400);
 			this->chart1->TabIndex = 0;
 			this->chart1->Text = L"chart1";
@@ -468,24 +511,36 @@ namespace LayoutTut {
 	{
 		double x0 = GetNumber(StringToCharArray(this->x0->Text));
 		double y0 = GetNumber(StringToCharArray(this->y0->Text));
+		double y1_0 = GetNumber(StringToCharArray(this->textBox1->Text));
 		double h = GetNumber(StringToCharArray(this->h->Text));
 		double numh = GetNumber(StringToCharArray(this->numh->Text));
 
 		char* infix = StringToCharArray(this->expression->Text);
 
-		Token postfix[1000];
-		int n = ConvertToPostfix(infix, postfix);
-
 		System::Windows::Forms::DataVisualization::Charting::Series^  series1;
 		series1 = chart1->Series->FindByName(L"Series1");
 		series1->Points->Clear();
 
+		System::Windows::Forms::DataVisualization::Charting::Series^  series2;
+		series2 = chart1->Series->FindByName(L"Series2");
+		series2->Points->Clear();
+
+		Token dydx[1], dzdx[1000];
+		dydx[0].type = TokenType::Z;
+		dydx[0].token = 'Z';
+
+		int numDzdx = ConvertToPostfix(infix, dzdx);
+		double yRes = 0.0;
+		double y1Res = 0.0;
+
 		for (int i = 0; i < numh; i++)
 		{
-			double result = RKFirstOrder(postfix, n, x0, y0, h);
+			RKSimultaneousFirstOrder(dydx, dzdx, 1, numDzdx, x0, y0, y1_0, h, &yRes, &y1Res);
 			x0 = x0 + h;
-			y0 = result;
+			y0 = yRes;
+			y1_0 = y1Res;
 			series1->Points->AddXY(x0, y0);
+			series2->Points->AddXY(x0, y1_0);
 		}
 
 	}
