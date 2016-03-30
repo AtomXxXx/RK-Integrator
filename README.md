@@ -1,5 +1,5 @@
 Numerical Integration by Runge Kutta method.
 
-This works only for first order differential equations.
+This supports first order and second order differential equations.
 
-MyForm.h and MyForm.cpp displays a graph using windows forms.
+RKForm.h and RKForm.cpp displays a graph using windows forms.
