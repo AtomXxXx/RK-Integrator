@@ -1,7 +1,7 @@
 #pragma once
 #include "RK.h"
 
-namespace LayoutTut {
+namespace RKGraph {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -11,30 +11,37 @@ namespace LayoutTut {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for MyForm
+	/// Summary for RKForm
 	/// </summary>
-	public ref class MyForm : public System::Windows::Forms::Form
+	public ref class RKForm : public System::Windows::Forms::Form
 	{
 	public:
-		MyForm(void)
+		RKForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			isFirstOrder = false;
 		}
 
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~MyForm()
+		~RKForm()
 		{
 			if (components)
 			{
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::TableLayoutPanel^  mainTableLayoutPanel;
+	private: System::Windows::Forms::Button^  secondOrderButton;
+	private: System::Windows::Forms::Button^  firstOrderButton;
+	private: bool isFirstOrder;
+	protected:
+
+	protected:
+
+
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel1;
 	protected:
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel3;
@@ -61,16 +68,11 @@ namespace LayoutTut {
 
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Button^  Calculate;
+	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::Label^  label6;
 
 
 	protected:
-
-
-
-
-
-
-
 
 	protected:
 
@@ -87,6 +89,165 @@ namespace LayoutTut {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->mainTableLayoutPanel = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->secondOrderButton = (gcnew System::Windows::Forms::Button());
+			this->firstOrderButton = (gcnew System::Windows::Forms::Button());
+			this->mainTableLayoutPanel->SuspendLayout();
+			this->SuspendLayout();
+			// 
+			// mainTableLayoutPanel
+			// 
+			this->mainTableLayoutPanel->ColumnCount = 1;
+			this->mainTableLayoutPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				50)));
+			this->mainTableLayoutPanel->Controls->Add(this->secondOrderButton, 0, 1);
+			this->mainTableLayoutPanel->Controls->Add(this->firstOrderButton, 0, 0);
+			this->mainTableLayoutPanel->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->mainTableLayoutPanel->Location = System::Drawing::Point(0, 0);
+			this->mainTableLayoutPanel->Name = L"mainTableLayoutPanel";
+			this->mainTableLayoutPanel->RowCount = 2;
+			this->mainTableLayoutPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
+				50)));
+			this->mainTableLayoutPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
+				50)));
+			this->mainTableLayoutPanel->Size = System::Drawing::Size(587, 478);
+			this->mainTableLayoutPanel->TabIndex = 0;
+			// 
+			// secondOrderButton
+			// 
+			this->secondOrderButton->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->secondOrderButton->Location = System::Drawing::Point(193, 333);
+			this->secondOrderButton->Name = L"secondOrderButton";
+			this->secondOrderButton->Size = System::Drawing::Size(200, 50);
+			this->secondOrderButton->TabIndex = 1;
+			this->secondOrderButton->Text = L"Second Order";
+			this->secondOrderButton->UseVisualStyleBackColor = true;
+			this->secondOrderButton->Click += gcnew System::EventHandler(this, &RKForm::secondOrderButton_Click);
+			// 
+			// firstOrderButton
+			// 
+			this->firstOrderButton->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->firstOrderButton->Location = System::Drawing::Point(193, 94);
+			this->firstOrderButton->Name = L"firstOrderButton";
+			this->firstOrderButton->Size = System::Drawing::Size(200, 50);
+			this->firstOrderButton->TabIndex = 0;
+			this->firstOrderButton->Text = L"First Order";
+			this->firstOrderButton->UseVisualStyleBackColor = true;
+			this->firstOrderButton->Click += gcnew System::EventHandler(this, &RKForm::firstOrderButton_Click);
+			// 
+			// RKForm
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(587, 478);
+			this->Controls->Add(this->mainTableLayoutPanel);
+			this->Name = L"RKForm";
+			this->Text = L"RKForm";
+			this->Load += gcnew System::EventHandler(this, &RKForm::RKForm_Load);
+			this->mainTableLayoutPanel->ResumeLayout(false);
+			this->ResumeLayout(false);
+
+		}
+#pragma endregion
+
+
+		void InitializeFirstOrderPartialLayout()
+		{
+			this->tableLayoutPanel4->ColumnCount = 4;
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				20)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				30)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				20)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				30)));
+			this->tableLayoutPanel4->Controls->Add(this->label3, 2, 0);
+			this->tableLayoutPanel4->Controls->Add(this->label2, 0, 0);
+			this->tableLayoutPanel4->Controls->Add(this->y0, 3, 0);
+			this->tableLayoutPanel4->Controls->Add(this->x0, 1, 0);
+			this->tableLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->tableLayoutPanel4->Location = System::Drawing::Point(243, 3);
+			this->tableLayoutPanel4->Name = L"tableLayoutPanel4";
+			this->tableLayoutPanel4->RowCount = 1;
+			this->tableLayoutPanel4->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
+			this->tableLayoutPanel4->Size = System::Drawing::Size(377, 29);
+			this->tableLayoutPanel4->TabIndex = 1;
+		}
+
+
+		void InitializeSecondOrderPartialLayout()
+		{
+			this->tableLayoutPanel4->ColumnCount = 6;
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				16.66667F)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				16.66667F)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				16.66667F)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				16.66667F)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				16.66667F)));
+			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				16.66667F)));
+			this->tableLayoutPanel4->Controls->Add(this->textBox1, 5, 0);
+			this->tableLayoutPanel4->Controls->Add(this->label6, 4, 0);
+			this->tableLayoutPanel4->Controls->Add(this->label3, 2, 0);
+			this->tableLayoutPanel4->Controls->Add(this->label2, 0, 0);
+			this->tableLayoutPanel4->Controls->Add(this->y0, 3, 0);
+			this->tableLayoutPanel4->Controls->Add(this->x0, 1, 0);
+			this->tableLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->tableLayoutPanel4->Location = System::Drawing::Point(243, 3);
+			this->tableLayoutPanel4->Name = L"tableLayoutPanel4";
+			this->tableLayoutPanel4->RowCount = 1;
+			this->tableLayoutPanel4->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
+			this->tableLayoutPanel4->Size = System::Drawing::Size(377, 29);
+			this->tableLayoutPanel4->TabIndex = 1;
+			// 
+			// textBox1
+			// 
+			this->textBox1->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->textBox1->Location = System::Drawing::Point(313, 3);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(61, 20);
+			this->textBox1->TabIndex = 7;
+			// 
+			// label6
+			// 
+			this->label6->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(251, 0);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(56, 29);
+			this->label6->TabIndex = 6;
+			this->label6->Text = L"y\' 0";
+			this->label6->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+
+
+			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+
+			System::Windows::Forms::DataVisualization::Charting::Legend^  legend2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+
+			legend2->DockedToChartArea = L"ChartArea1";
+			legend2->Name = L"Legend2";
+			this->chart1->Legends->Add(legend2);
+
+			series2->ChartArea = L"ChartArea1";
+			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series2->Legend = L"Legend2";
+			series2->Name = L"y";
+			series2->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
+			series2->YValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
+
+			this->chart1->Series->Add(series2);
+		}
+
+
+		void InitializeMainControls()
+		{
 			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			System::Windows::Forms::DataVisualization::Charting::Legend^  legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
 			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
@@ -98,6 +259,8 @@ namespace LayoutTut {
 			this->expression = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->tableLayoutPanel4 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->y0 = (gcnew System::Windows::Forms::TextBox());
@@ -212,31 +375,20 @@ namespace LayoutTut {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(86, 29);
 			this->label1->TabIndex = 0;
-			this->label1->Text = L"Expression";
+			if (!isFirstOrder) this->label1->Text = L"y\'\'(x) = ";
+			else this->label1->Text = L"y\'(x) = ";
 			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			// 
 			// tableLayoutPanel4
 			// 
-			this->tableLayoutPanel4->ColumnCount = 4;
-			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				20)));
-			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				30)));
-			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				20)));
-			this->tableLayoutPanel4->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				30)));
-			this->tableLayoutPanel4->Controls->Add(this->label3, 2, 0);
-			this->tableLayoutPanel4->Controls->Add(this->label2, 0, 0);
-			this->tableLayoutPanel4->Controls->Add(this->y0, 3, 0);
-			this->tableLayoutPanel4->Controls->Add(this->x0, 1, 0);
-			this->tableLayoutPanel4->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->tableLayoutPanel4->Location = System::Drawing::Point(243, 3);
-			this->tableLayoutPanel4->Name = L"tableLayoutPanel4";
-			this->tableLayoutPanel4->RowCount = 1;
-			this->tableLayoutPanel4->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-			this->tableLayoutPanel4->Size = System::Drawing::Size(377, 29);
-			this->tableLayoutPanel4->TabIndex = 1;
+			if (isFirstOrder)
+			{
+				InitializeFirstOrderPartialLayout();
+			}
+			else
+			{
+				InitializeSecondOrderPartialLayout();
+			}
 			// 
 			// label3
 			// 
@@ -244,9 +396,9 @@ namespace LayoutTut {
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(191, 0);
+			this->label3->Location = System::Drawing::Point(127, 0);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(69, 29);
+			this->label3->Size = System::Drawing::Size(56, 29);
 			this->label3->TabIndex = 5;
 			this->label3->Text = L"y0";
 			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -259,7 +411,7 @@ namespace LayoutTut {
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(3, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(69, 29);
+			this->label2->Size = System::Drawing::Size(56, 29);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"x0";
 			this->label2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -267,17 +419,17 @@ namespace LayoutTut {
 			// y0
 			// 
 			this->y0->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->y0->Location = System::Drawing::Point(266, 3);
+			this->y0->Location = System::Drawing::Point(189, 3);
 			this->y0->Name = L"y0";
-			this->y0->Size = System::Drawing::Size(108, 20);
+			this->y0->Size = System::Drawing::Size(56, 20);
 			this->y0->TabIndex = 3;
 			// 
 			// x0
 			// 
 			this->x0->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->x0->Location = System::Drawing::Point(78, 3);
+			this->x0->Location = System::Drawing::Point(65, 3);
 			this->x0->Name = L"x0";
-			this->x0->Size = System::Drawing::Size(107, 20);
+			this->x0->Size = System::Drawing::Size(56, 20);
 			this->x0->TabIndex = 2;
 			// 
 			// tableLayoutPanel6
@@ -330,7 +482,7 @@ namespace LayoutTut {
 			this->Calculate->TabIndex = 3;
 			this->Calculate->Text = L"Calculate";
 			this->Calculate->UseVisualStyleBackColor = true;
-			this->Calculate->Click += gcnew System::EventHandler(this, &MyForm::Calculate_Click);
+			this->Calculate->Click += gcnew System::EventHandler(this, &RKForm::Calculate_Click);
 			// 
 			// tableLayoutPanel2
 			// 
@@ -354,15 +506,18 @@ namespace LayoutTut {
 			chartArea1->Name = L"ChartArea1";
 			this->chart1->ChartAreas->Add(chartArea1);
 			this->chart1->Dock = System::Windows::Forms::DockStyle::Fill;
-			legend1->Enabled = false;
+			legend1->DockedToChartArea = L"ChartArea1";
+			legend1->ItemColumnSeparator = System::Windows::Forms::DataVisualization::Charting::LegendSeparatorStyle::Line;
 			legend1->Name = L"Legend1";
 			this->chart1->Legends->Add(legend1);
 			this->chart1->Location = System::Drawing::Point(3, 3);
 			this->chart1->Name = L"chart1";
+			this->chart1->RightToLeft = System::Windows::Forms::RightToLeft::No;
 			series1->ChartArea = L"ChartArea1";
 			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
 			series1->Legend = L"Legend1";
-			series1->Name = L"Series1";
+			if(isFirstOrder) series1->Name = L"y";
+			else series1->Name = L"y\'";
 			series1->XValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
 			series1->YValueType = System::Windows::Forms::DataVisualization::Charting::ChartValueType::Double;
 			this->chart1->Series->Add(series1);
@@ -379,7 +534,7 @@ namespace LayoutTut {
 			this->Controls->Add(this->tableLayoutPanel1);
 			this->Name = L"MyForm";
 			this->Text = L"Runge Kutta";
-			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			this->Load += gcnew System::EventHandler(this, &RKForm::RKForm_Load);
 			this->tableLayoutPanel1->ResumeLayout(false);
 			this->tableLayoutPanel5->ResumeLayout(false);
 			this->tableLayoutPanel5->PerformLayout();
@@ -391,12 +546,26 @@ namespace LayoutTut {
 			this->tableLayoutPanel6->PerformLayout();
 			this->tableLayoutPanel2->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
-			this->ResumeLayout(false);
-
 		}
-#pragma endregion
-	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
-	}
+
+	
+
+private: System::Void firstOrderButton_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	isFirstOrder = true;
+	InitializeMainControls();
+
+	mainTableLayoutPanel->SuspendLayout();
+	mainTableLayoutPanel->Visible = false;
+}
+private: System::Void secondOrderButton_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	isFirstOrder = false;
+	InitializeMainControls();
+
+	mainTableLayoutPanel->SuspendLayout();
+	mainTableLayoutPanel->Visible = false;
+}
 
 	private: char* StringToCharArray(String^ string)
 	{
@@ -464,7 +633,9 @@ namespace LayoutTut {
 		return sum * -1;
 	}
 
-	private: System::Void Calculate_Click(System::Object^  sender, System::EventArgs^  e)
+private: System::Void Calculate_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	if (isFirstOrder)
 	{
 		double x0 = GetNumber(StringToCharArray(this->x0->Text));
 		double y0 = GetNumber(StringToCharArray(this->y0->Text));
@@ -477,7 +648,7 @@ namespace LayoutTut {
 		int n = ConvertToPostfix(infix, postfix);
 
 		System::Windows::Forms::DataVisualization::Charting::Series^  series1;
-		series1 = chart1->Series->FindByName(L"Series1");
+		series1 = chart1->Series->FindByName(L"y");
 		series1->Points->Clear();
 
 		for (int i = 0; i < numh; i++)
@@ -487,7 +658,45 @@ namespace LayoutTut {
 			y0 = result;
 			series1->Points->AddXY(x0, y0);
 		}
-
 	}
-	};
+	else
+	{
+		double x0 = GetNumber(StringToCharArray(this->x0->Text));
+		double y0 = GetNumber(StringToCharArray(this->y0->Text));
+		double y1_0 = GetNumber(StringToCharArray(this->textBox1->Text));
+		double h = GetNumber(StringToCharArray(this->h->Text));
+		double numh = GetNumber(StringToCharArray(this->numh->Text));
+
+		char* infix = StringToCharArray(this->expression->Text);
+
+		System::Windows::Forms::DataVisualization::Charting::Series^  series1;
+		series1 = chart1->Series->FindByName(L"y");
+		series1->Points->Clear();
+
+		System::Windows::Forms::DataVisualization::Charting::Series^  series2;
+		series2 = chart1->Series->FindByName(L"y'");
+		series2->Points->Clear();
+
+		Token dydx[1], dzdx[1000];
+		dydx[0].type = TokenType::Z;
+		dydx[0].token = 'Z';
+
+		int numDzdx = ConvertToPostfix(infix, dzdx);
+		double yRes = 0.0;
+		double y1Res = 0.0;
+
+		for (int i = 0; i < numh; i++)
+		{
+			RKSimultaneousFirstOrder(dydx, dzdx, 1, numDzdx, x0, y0, y1_0, h, &yRes, &y1Res);
+			x0 = x0 + h;
+			y0 = yRes;
+			y1_0 = y1Res;
+			series1->Points->AddXY(x0, y0);
+			series2->Points->AddXY(x0, y1_0);
+		}
+	}
+}
+private: System::Void RKForm_Load(System::Object^  sender, System::EventArgs^  e) {
+}
+};
 }

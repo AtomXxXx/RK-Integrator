@@ -45,6 +45,7 @@ enum TokenType
 	Operator,
 	X,
 	Y,
+	Z,
 	Invalid
 };
 
@@ -154,8 +155,24 @@ int ConvertToPostfix(char *infix, Token *postfix)
 			}
 			else if (ch == 'y' || ch == 'Y')
 			{
-				postfix[k].token = 'Y';
-				postfix[k].type = TokenType::Y;
+				if (infix[i] == 39 || infix[i] == 96)
+				{
+					i++;
+					postfix[k].token = 'Z';
+					postfix[k].type = TokenType::Z;
+					k++;
+				}
+				else
+				{
+					postfix[k].token = 'Y';
+					postfix[k].type = TokenType::Y;
+					k++;
+				}
+			}
+			else if (ch == 'z' || ch == 'Z')
+			{
+				postfix[k].token = 'Z';
+				postfix[k].type = TokenType::Z;
 				k++;
 			}
 		}
@@ -189,7 +206,7 @@ int ConvertToPostfix(char *infix, Token *postfix)
 	return k;
 }
 
-double EvaluatePostfixExpression(Token *postfix, int n, double x, double y)
+double EvaluatePostfixExpression(Token *postfix, int n, double x, double y, double z)
 {
 	double stack[50];
 	int top = -1;
@@ -207,6 +224,10 @@ double EvaluatePostfixExpression(Token *postfix, int n, double x, double y)
 		else if (postfix[i].type == TokenType::Y)
 		{
 			stack[++top] = y;
+		}
+		else if (postfix[i].type == TokenType::Z)
+		{
+			stack[++top] = z;
 		}
 		else
 		{
@@ -238,12 +259,12 @@ double EvaluatePostfixExpression(Token *postfix, int n, double x, double y)
 
 double RKFirstOrder(Token postfix[], int numTokens, double x0, double y0, double h)
 {
-	double k1 = h * EvaluatePostfixExpression(postfix, numTokens, x0, y0);
-	double k2 = h * EvaluatePostfixExpression(postfix, numTokens, x0 + h / 2, y0 + k1 / 2);
-	double k3 = h * EvaluatePostfixExpression(postfix, numTokens, x0 + h / 2, y0 + k2 / 2);
-	double k4 = h * EvaluatePostfixExpression(postfix, numTokens, x0 + h, y0 + k3);
+	double k1 = h * EvaluatePostfixExpression(postfix, numTokens, x0, y0, 0);
+	double k2 = h * EvaluatePostfixExpression(postfix, numTokens, x0 + h / 2, y0 + k1 / 2, 0);
+	double k3 = h * EvaluatePostfixExpression(postfix, numTokens, x0 + h / 2, y0 + k2 / 2, 0);
+	double k4 = h * EvaluatePostfixExpression(postfix, numTokens, x0 + h, y0 + k3, 0);
 
-	double result = y0 + (1 / 6.0f) * (k1 + 2 * k2 + 2 * k3 + k4);
+	double result = y0 + (1 / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4);
 
 	return result;
 }
@@ -254,5 +275,43 @@ double RKFirstOrder(char infix[], double x0, double y0, double h)
 	int n = ConvertToPostfix(infix, postfix);
 
 	return RKFirstOrder(postfix, n, x0, y0, h);
+}
+
+void RKSimultaneousFirstOrder(Token dydx[], Token dzdx[],int numDydx, int numDzdx, double x0, double y0, double z0, double h, double* yRes, double* zRes)
+{
+	double k1 = h * EvaluatePostfixExpression(dydx,numDydx, x0, y0, z0);
+	double l1 = h * EvaluatePostfixExpression(dzdx, numDzdx, x0, y0, z0);
+
+	double k2 = h * EvaluatePostfixExpression(dydx, numDydx, x0 + h / 2.0, y0 + k1 / 2.0, z0 + l1 / 2.0);
+	double l2 = h * EvaluatePostfixExpression(dzdx, numDzdx, x0 + h / 2.0, y0 + k1 / 2.0, z0 + l1 / 2.0);
+
+	double k3 = h * EvaluatePostfixExpression(dydx, numDydx, x0 + h / 2.0, y0 + k2 / 2.0, z0 + l2 / 2.0);
+	double l3 = h * EvaluatePostfixExpression(dzdx, numDzdx, x0 + h / 2.0, y0 + k2 / 2.0, z0 + l2 / 2.0);
+
+	double k4 = h * EvaluatePostfixExpression(dydx, numDydx, x0 + h, y0 + k3, z0 + l3);
+	double l4 = h * EvaluatePostfixExpression(dzdx, numDzdx, x0 + h, y0 + k3, z0 + l3);
+
+	*yRes = y0 + (1 / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4);
+	*zRes = z0 + (1 / 6.0) * (l1 + 2 * l2 + 2 * l3 + l4);
+}
+
+void RKSimultaneousFirstOrder(char dydx[], char dzdx[], double x0, double y0, double z0, double h, double* yRes, double* zRes)
+{
+	Token dydxP[1000], dzdxP[1000];
+	int numDydx = ConvertToPostfix(dydx, dydxP);
+	int numDzdx = ConvertToPostfix(dzdx, dzdxP);
+
+	RKSimultaneousFirstOrder(dydxP, dzdxP, numDydx, numDzdx, x0, y0, z0, h, yRes, zRes);
+}
+
+void RKSecondOrder(char infix[], double x0, double y0, double y1_0, double h, double* yRes, double* y1Res)
+{
+	Token dydx[1], dzdx[1000];
+	dydx[0].type = TokenType::Z;
+	dydx[0].token = 'Z';
+
+	int numDzdx = ConvertToPostfix(infix, dzdx);
+
+	RKSimultaneousFirstOrder(dydx, dzdx, 1, numDzdx, x0, y0, y1_0, h, yRes, y1Res);
 }
 
